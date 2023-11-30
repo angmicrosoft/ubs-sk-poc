@@ -1,0 +1,145 @@
+{
+    "version": "1.0",
+    "skillName": "Plugins",
+    "functionName": "SearchQueryPlugin",
+    "description": "Given an input from the user, generate a best one line query for the context.",
+    "filePath": "app\\GPTAcc.SearchOrchestrator.Backend\\Plugins\\SearchQueryPlugin\\skprompt.txt",
+    "results": [
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "What should I eat for lunch today?"
+                }
+            ],
+            "output": {
+                "prompt": "Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about employee healthcare plans and the employee handbook.\nYou have access to Azure Cognitive Search index with 100's of documents.\nGenerate a search query based on the conversation and the new question.\nDo not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.\nDo not include any text inside [] or <<>> in the search query terms.\nDo not include any special characters like '+'.\nIf the question is not in English, translate the question to English before generating the search query.\nIf you cannot generate a search query, return just the number 0.\ne.g.\nUSER:What are my health plans?\nASSISTANT: Show available health plans\nUSER:does my plan cover cardio?\nASSISTANT: Health plan cardio coverage\n\n[INPUT]\nWhat should I eat for lunch today?\n[END INPUT]\n",
+                "durationInMilliseconds": 1600.7585,
+                "inputTokens": 199,
+                "outputTokens": 1,
+                "result": "0",
+                "chatCompletionResult": "0"
+            }
+        },
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "How to fix my outlook issue?"
+                }
+            ],
+            "output": {
+                "prompt": "Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about employee healthcare plans and the employee handbook.\nYou have access to Azure Cognitive Search index with 100's of documents.\nGenerate a search query based on the conversation and the new question.\nDo not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.\nDo not include any text inside [] or <<>> in the search query terms.\nDo not include any special characters like '+'.\nIf the question is not in English, translate the question to English before generating the search query.\nIf you cannot generate a search query, return just the number 0.\ne.g.\nUSER:What are my health plans?\nASSISTANT: Show available health plans\nUSER:does my plan cover cardio?\nASSISTANT: Health plan cardio coverage\n\n[INPUT]\nHow to fix my outlook issue?\n[END INPUT]\n",
+                "durationInMilliseconds": 1714.4923,
+                "inputTokens": 198,
+                "outputTokens": 4,
+                "result": "outlook issue fix",
+                "chatCompletionResult": "outlook issue fix"
+            }
+        },
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "Outlook crashed"
+                }
+            ],
+            "output": {
+                "prompt": "Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about employee healthcare plans and the employee handbook.\nYou have access to Azure Cognitive Search index with 100's of documents.\nGenerate a search query based on the conversation and the new question.\nDo not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.\nDo not include any text inside [] or <<>> in the search query terms.\nDo not include any special characters like '+'.\nIf the question is not in English, translate the question to English before generating the search query.\nIf you cannot generate a search query, return just the number 0.\ne.g.\nUSER:What are my health plans?\nASSISTANT: Show available health plans\nUSER:does my plan cover cardio?\nASSISTANT: Health plan cardio coverage\n\n[INPUT]\nOutlook crashed\n[END INPUT]\n",
+                "durationInMilliseconds": 1888.5149,
+                "inputTokens": 195,
+                "outputTokens": 3,
+                "result": "Outlook crashed",
+                "chatCompletionResult": "Outlook crashed"
+            }
+        },
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "Outlook crashed"
+                }
+            ],
+            "output": {
+                "prompt": "You are a helpful AI assistant, generate search query for followup question.\nMake your respond simple and precise. Return the query only, do not return any other text.\ne.g.\nNorthwind Health Plus AND standard plan.\nstandard plan AND dental AND employee benefit.\n\n[INPUT]\nOutlook crashed\n[END INPUT]\n",
+                "durationInMilliseconds": 1737.1368,
+                "inputTokens": 64,
+                "outputTokens": 4,
+                "result": "Outlook troubleshooting guide",
+                "chatCompletionResult": "Outlook troubleshooting guide"
+            }
+        }
+    ]
+}

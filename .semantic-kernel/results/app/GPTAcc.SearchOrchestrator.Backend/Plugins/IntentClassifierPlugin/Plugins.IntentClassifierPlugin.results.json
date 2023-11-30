@@ -1,0 +1,77 @@
+{
+    "version": "1.0",
+    "skillName": "Plugins",
+    "functionName": "IntentClassifierPlugin",
+    "description": "Given a question classify the intent to be \"IT\" or \"NON-IT\"",
+    "filePath": "app\\GPTAcc.SearchOrchestrator.Backend\\Plugins\\IntentClassifierPlugin\\skprompt.txt",
+    "results": [
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "What do I eat for lunch today?"
+                }
+            ],
+            "output": {
+                "prompt": "For the following input identify the intent of the question and classify it to IT or NON-IT category.\n\n#EXAMPLE#\nexample 1:\nUser: How to fix my outlook?\nAssistant: IT\nexample 2:\nUser: How to fix my car?\nAssistant: NON-IT\nUser: How to vouch for a collague?\nAssitant: IT\n#EXAMPLE#\n\n[INPUT]\nWhat do I eat for lunch today?\n[END INPUT]\n",
+                "durationInMilliseconds": 1858.2013,
+                "inputTokens": 92,
+                "outputTokens": 11,
+                "result": "Intent: NON-IT\nCategory: NON-IT",
+                "chatCompletionResult": "Intent: NON-IT\nCategory: NON-IT"
+            }
+        },
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
+                    "value": "Outlook is crashed"
+                }
+            ],
+            "output": {
+                "prompt": "For the following input identify the intent of the question and classify it to IT or NON-IT category.\n\n#EXAMPLE#\nexample 1:\nUser: How to fix my outlook?\nAssistant: IT\nexample 2:\nUser: How to fix my car?\nAssistant: NON-IT\nUser: How to vouch for a collague?\nAssitant: IT\n#EXAMPLE#\n\n[INPUT]\nOutlook is crashed\n[END INPUT]\n",
+                "durationInMilliseconds": 1890.5006,
+                "inputTokens": 89,
+                "outputTokens": 12,
+                "result": "Intent: How to fix my crashed Outlook?\nCategory: IT",
+                "chatCompletionResult": "Intent: How to fix my crashed Outlook?\nCategory: IT"
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Backend Launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/app/GPTAcc.SearchOrchestrator.Backend/bin/Debug/net8.0/GPTAcc.SearchOrchestrator.Backend.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/app/GPTAcc.SearchOrchestrator.Backend",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:5000", // Add this line
+                "AZURE_KEY_VAULT_ENDPOINT": "https://kv-olfov5mj6rvpw.vault.azure.net/"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
+
+    ]
+}
