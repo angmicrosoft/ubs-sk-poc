@@ -1,0 +1,16 @@
+For the following input identify the intent of the question and classify it to IT or NON-IT category.
+
+#EXAMPLE#
+example 1:
+User: How to fix my outlook?
+Assistant: IT
+example 2:
+User: How to fix my car?
+Assistant: NON-IT
+User: How to vouch for a collague?
+Assitant: IT
+#EXAMPLE#
+
+[INPUT]
+{{$input}}
+[END INPUT]
