@@ -12,8 +12,13 @@
     "input": {
         "parameters": [
             {
-                "name": "question",
-                "description": "Input for this semantic function.",
+                "name": "input",
+                "description": "The question from the user.",
+                "defaultValue": ""
+            },
+            {
+                "name": "messages",
+                "description": "The message that is used to generate the query.",
                 "defaultValue": ""
             }
         ]
@@ -21,13 +26,8 @@
     "output": {
         "parameters": [
             {
-                "name": "query",
+                "name": "output",
                 "description": "The generated query.",
-                "defaultValue": ""
-            },
-            {
-                "name": "messages",
-                "description": "The message that is used to generate the query.",
                 "defaultValue": ""
             }
         ]

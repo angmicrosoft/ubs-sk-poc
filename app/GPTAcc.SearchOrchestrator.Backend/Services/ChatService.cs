@@ -35,10 +35,19 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
             Console.WriteLine( $"Embeddings: {embeddings.Length}");
 
             // Create context
-            var context = _kernel.CreateNewContext();
-            context.Variables.Add("question", question);
-            context.Variables.Add("embeddings", string.Join(",", embeddings));
+            var variables = new ContextVariables            
+            {
+                ["input"] = question,
+                ["embeddings"] = string.Join(",", embeddings),
+                ["messages"] = @"USER:Health Plan details
+                                ASSISTANT: What are my health plans?
+                                USER:Plan Coverage
+                                ASSISTANT: What is the health plan cover?"
 
+            };
+            var context = _kernel.CreateNewContext(variables);
+
+            
             var pluginsDirectory = Path.Combine(currentDirectory, "Plugins");
             // Create intent plugin
             var intentPlugin = _kernel.ImportSemanticFunctionsFromDirectory(pluginsDirectory, "IntentClassifierPlugin");
@@ -57,21 +66,21 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
             var followupPlugin = _kernel.ImportSemanticFunctionsFromDirectory(pluginsDirectory, "FollowUpQuestionPlugin");
 
             // Implement plugin calls
-            var queryResult =  await searchQueryPlugin["SearchQuery"].InvokeAsync(context);
-
-            ApproachResponse approachResponse;
+            var queryResult =  await _kernel.RunAsync(variables, searchQueryPlugin["SearchQuery"]);
             Console.WriteLine($"Query Result: {context.Result}");
             var query = context.Result;
-            context.Variables.Add("query", query);
-            var searchContentResult = await searchPlugin["Search"].InvokeAsync(context);
-            var chatConversationResult = await conversationPlugin["Chat"].InvokeAsync(context);
+            variables.Add("query", query);
+            var searchContentResult = await _kernel.RunAsync(variables, searchPlugin["Search"]);
+            variables.Add("documentTitle", context.Variables["documentTitle1"]);
+            variables.Add("documentContent", context.Variables["documentContent1"]);
+            var chatConversationResult = await _kernel.RunAsync(variables, conversationPlugin["Chat"]);
             Console.WriteLine($"Chat Conversation: {context.Result}");
             var chatConversation = context.Result;
             var answerObject = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(chatConversation);
             var ans = answerObject.GetProperty("answer").GetString() ?? throw new InvalidOperationException("Failed to get answer");
             var thoughts = answerObject.GetProperty("thoughts").GetString() ?? throw new InvalidOperationException("Failed to get thoughts");
-            context.Variables.Add("answer", ans);
-            await followupPlugin["FollowUpQuestion"].InvokeAsync(context);
+            variables.Add("answer", ans);
+            var followUpResult = await _kernel.RunAsync(variables, followupPlugin["FollowUpQuestion"]);    
             
             // Get the final answer
             var finalAnswer = context.Result;
@@ -80,7 +89,7 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
                 new SupportingContentRecord(context.Variables["documentTitle2"], context.Variables["documentContent2"]), 
                 new SupportingContentRecord(context.Variables["documentTitle3"], context.Variables["documentContent3"])
                 };
-            approachResponse = new ApproachResponse(ans, thoughts, supportingContentRecords, "", "");
+            ApproachResponse approachResponse = new ApproachResponse(ans, thoughts, supportingContentRecords, "", "");
 
             return Results.Ok(approachResponse);
         }

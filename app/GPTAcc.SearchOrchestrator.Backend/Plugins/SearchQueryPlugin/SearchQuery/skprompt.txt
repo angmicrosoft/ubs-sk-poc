@@ -8,12 +8,12 @@ If the question is not in English, translate the question to English before gene
 If you cannot generate a search query, return just the number 0.
 e.g.
 [messages]
-USER:Health Plan details
-ASSISTANT: What are my health plans?
-USER:Plan Coverage
-ASSISTANT: What is the health plan cover?
+{{$messages}}
 [END messages]
 
 [INPUT]
-{{$question}}
+{{$input}}
 [END INPUT]
+
+[OUTPUT]
+{{$output}}
