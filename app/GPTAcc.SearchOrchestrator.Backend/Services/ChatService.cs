@@ -66,6 +66,12 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
             var followupPlugin = _kernel.ImportSemanticFunctionsFromDirectory(pluginsDirectory, "FollowUpQuestionPlugin");
 
             // Implement plugin calls
+            var intentResult = await _kernel.RunAsync(variables, intentPlugin["IntentClassifier"]);
+            if(intentResult == null || context.Result== "NON-IT")
+            {
+                return Results.BadRequest("Intent not found");
+            }
+
             var queryResult =  await _kernel.RunAsync(variables, searchQueryPlugin["SearchQuery"]);
             Console.WriteLine($"Query Result: {context.Result}");
             var query = context.Result;
@@ -80,11 +86,18 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
             var ans = answerObject.GetProperty("answer").GetString() ?? throw new InvalidOperationException("Failed to get answer");
             var thoughts = answerObject.GetProperty("thoughts").GetString() ?? throw new InvalidOperationException("Failed to get thoughts");
             variables.Add("answer", ans);
-            var followUpResult = await _kernel.RunAsync(variables, followupPlugin["FollowUpQuestion"]);    
-            
+            var followUpResult = await _kernel.RunAsync(variables, followupPlugin["FollowUpQuestion"]);   
+            var followUpQuestionsJson =  context.Result;
+            var followUpQuestionsObject = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(followUpQuestionsJson);
+            var followUpQuestionsList = followUpQuestionsObject.EnumerateArray().Select(x => x.GetString()).ToList();
+
+            foreach (var followUpQuestion in followUpQuestionsList)
+            {
+                ans += $" <<{followUpQuestion}>> ";
+            }
             // Get the final answer
             var finalAnswer = context.Result;
-            SupportingContentRecord[] supportingContentRecords =new [] { 
+            SupportingContentRecord[] supportingContentRecords = new [] { 
                 new SupportingContentRecord(context.Variables["documentTitle1"], context.Variables["documentContent1"]), 
                 new SupportingContentRecord(context.Variables["documentTitle2"], context.Variables["documentContent2"]), 
                 new SupportingContentRecord(context.Variables["documentTitle3"], context.Variables["documentContent3"])

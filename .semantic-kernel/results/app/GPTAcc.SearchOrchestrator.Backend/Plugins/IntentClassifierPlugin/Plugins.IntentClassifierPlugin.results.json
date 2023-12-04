@@ -27,6 +27,40 @@
             "variables": [
                 {
                     "key": "input",
+                    "value": "Fix my car"
+                }
+            ],
+            "output": {
+                "prompt": "For the following input identify the intent of the question and classify it to IT or NON-IT category.\n\n#EXAMPLE#\nexample 1:\nUser: How to fix my outlook?\nAssistant: IT\nexample 2:\nUser: How to fix my car?\nAssistant: NON-IT\nUser: How to vouch for a collague?\nAssitant: IT\n#EXAMPLE#\n\n[INPUT]\nFix my car\n[END INPUT]\n",
+                "durationInMilliseconds": 1998.2737,
+                "inputTokens": 88,
+                "outputTokens": 3,
+                "result": "NON-IT",
+                "chatCompletionResult": "NON-IT"
+            }
+        },
+        {
+            "completionConfig": {
+                "label": "chat",
+                "aiService": "AzureOpenAI",
+                "deploymentOrModelId": "chat",
+                "endpoint": "https://cog-olfov5mj6rvpw.openai.azure.com/",
+                "useCustomEndpoint": false,
+                "endpointType": "chat-completion",
+                "modelId": "gpt-35-turbo",
+                "chatSystemMessage": "You are an AI assistant that helps people find information."
+            },
+            "requestSettings": {
+                "temperature": 0.3,
+                "topP": 1,
+                "presencePenalty": 0,
+                "frequencyPenalty": 0,
+                "maxTokens": 256,
+                "stopSequences": []
+            },
+            "variables": [
+                {
+                    "key": "input",
                     "value": "What do I eat for lunch today?"
                 }
             ],

@@ -1,4 +1,4 @@
-For the following input identify the intent of the question and classify it to IT or NON-IT category.
+For the following input identify the intent of the question and classify it to "IT" or "NON-IT" category ONLY.
 
 #EXAMPLE#
 example 1:
