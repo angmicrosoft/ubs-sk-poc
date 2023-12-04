@@ -11,7 +11,7 @@ Use square brackets to reference the source, for example [info1.txt].
 Don't combine sources, list each source separately, for example [info1.txt][info2.pdf].
 
 +++++
-{{$documentContent}}
+{{$documentTitle1}}:{{$documentContent1}}
 +++++
 
 You answer needs to be a json object with the following format.

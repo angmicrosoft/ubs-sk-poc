@@ -18,5 +18,19 @@
             }
         ]
     },
+    "output": {
+        "parameters": [
+            {
+                "name": "query",
+                "description": "The generated query.",
+                "defaultValue": ""
+            },
+            {
+                "name": "messages",
+                "description": "The message that is used to generate the query.",
+                "defaultValue": ""
+            }
+        ]
+    },
     "default_backends": []
 }

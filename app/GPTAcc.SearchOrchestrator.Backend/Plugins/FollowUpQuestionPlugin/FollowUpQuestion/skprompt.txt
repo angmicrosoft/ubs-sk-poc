@@ -6,7 +6,7 @@ Generate three follow-up question based on the answer you just generated.
 
 # Content
 [Content]
-{{$documentContent}}
+{{$documentTitle1}}:{{$documentContent1}}
 [END Content]
 
 # Format of the response

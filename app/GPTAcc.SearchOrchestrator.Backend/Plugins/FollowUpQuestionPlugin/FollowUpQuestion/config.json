@@ -12,7 +12,12 @@
     "input": {
         "parameters": [
             {
-                "name": "documentContent",
+                "name": "documentTitle1",
+                "description": "Request or command or goal.",
+                "defaultValue": ""
+            },
+            {
+                "name": "documentContent1",
                 "description": "Input for this semantic function.",
                 "defaultValue": ""
             },

@@ -12,7 +12,7 @@
     "input": {
         "parameters": [
             {
-                "name": "input",
+                "name": "question",
                 "description": "Input for this semantic function.",
                 "defaultValue": ""
             }
@@ -21,7 +21,7 @@
     "output": {
         "parameters": [
             {
-                "name": "output",
+                "name": "intent",
                 "description": "Output for this semantic function.",
                 "defaultValue": ""
             }

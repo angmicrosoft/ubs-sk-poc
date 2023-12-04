@@ -20,7 +20,7 @@ namespace GPTAcc.SearchOrchestrator.Backend.Plugins
             SKContext context,
             CancellationToken cancellationToken = default)
         {
-            var query = context.Variables["question"];
+            var query = context.Variables["query"];
             var embeddingsString = context.Variables["embeddings"];
             string[] embeddingsStringArray = embeddingsString.Split(',');
             float[] embedding = Array.ConvertAll(embeddingsStringArray, float.Parse);
@@ -31,12 +31,15 @@ namespace GPTAcc.SearchOrchestrator.Backend.Plugins
                 RetrievalMode = "Semantic"
             };
 
-            var documentContents = await _searchClient.QueryDocumentsAsync(query, embedding, overrides, cancellationToken);
+            var documentContents = await _searchClient.QueryDocumentsAsync(query, embedding, overrides, cancellationToken);            
+            int i =1;
+            foreach (var document in documentContents)
+            {                
+                context.Variables.Add($"documentTitle{i}", document?.Title);
+                context.Variables.Add($"documentContent{i}", document?.Content);
+                i++;
+            }
             
-            
-            var document = documentContents.FirstOrDefault();
-            context.Variables.Add("documentTitle", document?.Title);
-            context.Variables.Add("documentContent", document?.Content);
             return context;
         }
 

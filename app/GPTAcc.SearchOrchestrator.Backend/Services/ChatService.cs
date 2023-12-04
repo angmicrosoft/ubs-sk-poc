@@ -57,44 +57,32 @@ namespace GPTAcc.SearchOrchestrator.Backend.Services
             var followupPlugin = _kernel.ImportSemanticFunctionsFromDirectory(pluginsDirectory, "FollowUpQuestionPlugin");
 
             // Implement plugin calls
-            await searchQueryPlugin["SearchQuery"].InvokeAsync(context);
-            await searchPlugin["Search"].InvokeAsync(context);
-            await conversationPlugin["Chat"].InvokeAsync(context);
+            var queryResult =  await searchQueryPlugin["SearchQuery"].InvokeAsync(context);
+
+            ApproachResponse approachResponse;
+            Console.WriteLine($"Query Result: {context.Result}");
+            var query = context.Result;
+            context.Variables.Add("query", query);
+            var searchContentResult = await searchPlugin["Search"].InvokeAsync(context);
+            var chatConversationResult = await conversationPlugin["Chat"].InvokeAsync(context);
+            Console.WriteLine($"Chat Conversation: {context.Result}");
+            var chatConversation = context.Result;
+            var answerObject = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(chatConversation);
+            var ans = answerObject.GetProperty("answer").GetString() ?? throw new InvalidOperationException("Failed to get answer");
+            var thoughts = answerObject.GetProperty("thoughts").GetString() ?? throw new InvalidOperationException("Failed to get thoughts");
+            context.Variables.Add("answer", ans);
             await followupPlugin["FollowUpQuestion"].InvokeAsync(context);
             
             // Get the final answer
             var finalAnswer = context.Result;
+            SupportingContentRecord[] supportingContentRecords =new [] { 
+                new SupportingContentRecord(context.Variables["documentTitle1"], context.Variables["documentContent1"]), 
+                new SupportingContentRecord(context.Variables["documentTitle2"], context.Variables["documentContent2"]), 
+                new SupportingContentRecord(context.Variables["documentTitle3"], context.Variables["documentContent3"])
+                };
+            approachResponse = new ApproachResponse(ans, thoughts, supportingContentRecords, "", "");
 
-            // var stepwiseConfig = new StepwisePlannerConfig()
-            // {
-            //     MaxIterations = 10,
-            // };
-            // var planner =  new StepwisePlanner(_kernel, stepwiseConfig);
-            // var plan = planner.CreatePlan(question);
-            // var result = await _kernel.RunAsync(plan);
-
-
-            // var stepsTaken = result?.FunctionResults?.First()?.Metadata["stepsTaken"]?.ToString();
-            // if (stepsTaken != null)
-            // {
-            //     var deserializedStepsTaken = JsonConvert.DeserializeObject<Step[]>(stepsTaken);
-            //     // Use the deserializedStepsTaken object as needed
-            //     Console.WriteLine(deserializedStepsTaken);
-                
-            //     if(deserializedStepsTaken == null)
-            //     {
-            //         return Results.NoContent();
-            //     }
-            //     var approachResponse = new ApproachResponse(deserializedStepsTaken[stepsTaken.Length - 1]?.FinalAnswer, 
-            //     deserializedStepsTaken[stepsTaken.Length - 1]?.ActionVariables["dataPoints"],
-            //     new []{ new SupportingContentRecord(deserializedStepsTaken[stepsTaken.Length - 1]?.ActionVariables["documentTitle"], deserializedStepsTaken[stepsTaken.Length - 1]?.ActionVariables["documentContent"]) },
-            //      deserializedStepsTaken[stepsTaken.Length - 1]?.Thought,
-            //     deserializedStepsTaken[stepsTaken.Length - 1]?.ActionVariables["citationBaseUrl"]);
-            //     return Results.Ok(approachResponse);
-            // }        
-            
-            return Results.BadRequest();
-        
+            return Results.Ok(approachResponse);
         }
     }
 }

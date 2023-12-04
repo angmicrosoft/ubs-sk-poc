@@ -7,10 +7,12 @@ Do not include any special characters like '+'.
 If the question is not in English, translate the question to English before generating the search query.
 If you cannot generate a search query, return just the number 0.
 e.g.
-USER:What are my health plans?
-ASSISTANT: Show available health plans
-USER:does my plan cover cardio?
-ASSISTANT: Health plan cardio coverage
+[messages]
+USER:Health Plan details
+ASSISTANT: What are my health plans?
+USER:Plan Coverage
+ASSISTANT: What is the health plan cover?
+[END messages]
 
 [INPUT]
 {{$question}}
